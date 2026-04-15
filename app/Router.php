@@ -42,32 +42,31 @@ class Router
     $method = $_SERVER['REQUEST_METHOD'];
     $uri    = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-    // ---- SUPPRIMER LE SOUS-DOSSIER XAMPP ----
-    $basePath = '/aji_nl3bo_managment';
-    if (str_starts_with($uri, $basePath)) {
-        $uri = substr($uri, strlen($basePath));
+    // ---- DETECTION AUTOMATIQUE DU SOUS-DOSSIER ----
+    // SCRIPT_NAME = /aji_nl3bo_managment/index.php
+    // On extrait le dossier parent de index.php
+    $scriptDir = dirname($_SERVER['SCRIPT_NAME']); // → /aji_nl3bo_managment
+    $scriptDir = rtrim($scriptDir, '/');
+
+    if ($scriptDir !== '' && str_starts_with($uri, $scriptDir)) {
+        $uri = substr($uri, strlen($scriptDir));
     }
 
     // URI vide → "/"
     $uri = rtrim($uri, '/') ?: '/';
 
-    // ---- DEBUG TEMPORAIRE ----
-    // die("URI après basePath : " . $uri);
-
     foreach ($this->routes as $route) {
-
         $pattern = preg_replace('#:([a-zA-Z0-9_]+)#', '([^/]+)', $route['path']);
         $pattern = '#^' . $pattern . '$#';
 
         if ($route['method'] === $method && preg_match($pattern, $uri, $matches)) {
             array_shift($matches);
-            $params = $matches;
 
             $controllerClass = $route['controller'];
             $methodName      = $route['function'];
 
             $controller = new $controllerClass();
-            $controller->$methodName(...$params);
+            $controller->$methodName(...$matches);
             return;
         }
     }
