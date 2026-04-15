@@ -1,4 +1,7 @@
 <?php
+namespace App\Models;
+use PDO;
+
 class Game{
     private $conn;
 private $id;
@@ -53,6 +56,16 @@ public function getAllGames(){
 
 }
 
+public function getGameById($id){
+    $sql ='SELECT games.*,categories.name AS category
+    FROM games
+    LEFT JOIN categories ON games.category_id=categories.id
+    WHERE id = ?';
+
+    $stmt=$this->conn->prepare($sql);
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 public function createGame($name,$category_id, $duration,$description,$difficulty,$status){
 $sql = 'INSERT INTO games(name,category_id,duration,description,difficulty,status)
 VALUES (?,?,?,?,?,?)';
