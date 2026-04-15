@@ -1,0 +1,11 @@
+{
+    "name": "game/cafe",
+    "description": "Application de gestion pour café de jeux",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\": "config/"
+        }
+    },
+    "require": {}
+}
