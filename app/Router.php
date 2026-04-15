@@ -1,96 +1,52 @@
 <?php
-
 namespace App;
 
-class Router
-{
-    // ---- ATTRIBUTS ----
-    private array  $routes = [];
-    private string $basePath;
+class Router {
+    private array $routes = [];
 
-    // ---- CONSTRUCTEUR ----
-    public function __construct(string $basePath = '')
-    {
-        $this->basePath = rtrim($basePath, '/');
+    public function get(string $path, array $action): void {
+        $this->routes[] = ['method' => 'GET', 'path' => $path, 'controller' => $action[0], 'function' => $action[1]];
     }
 
-    // ---- AJOUTER UNE ROUTE GET ----
-    public function get(string $path, array $action): void
-    {
-        $this->routes[] = [
-            'method'     => 'GET',
-            'path'       => $path,
-            'controller' => $action[0],
-            'function'   => $action[1],
-        ];
+    public function post(string $path, array $action): void {
+        $this->routes[] = ['method' => 'POST', 'path' => $path, 'controller' => $action[0], 'function' => $action[1]];
     }
 
-    // ---- AJOUTER UNE ROUTE POST ----
-    public function post(string $path, array $action): void
-    {
-        $this->routes[] = [
-            'method'     => 'POST',
-            'path'       => $path,
-            'controller' => $action[0],
-            'function'   => $action[1],
-        ];
-    }
+    public function dispatch(): void {
+        $method = $_SERVER['REQUEST_METHOD'];
+        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-    // ---- DISPATCHER : trouver la bonne route et appeler le controller ----
-    public function dispatch(): void
-{
-    $method = $_SERVER['REQUEST_METHOD'];
-    $uri    = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
-    // ---- DETECTION AUTOMATIQUE DU SOUS-DOSSIER ----
-    // SCRIPT_NAME = /aji_nl3bo_managment/index.php
-    // On extrait le dossier parent de index.php
-    $scriptDir = dirname($_SERVER['SCRIPT_NAME']); // → /aji_nl3bo_managment
-    $scriptDir = rtrim($scriptDir, '/');
-
-    if ($scriptDir !== '' && str_starts_with($uri, $scriptDir)) {
-        $uri = substr($uri, strlen($scriptDir));
-    }
-
-    // URI vide → "/"
-    $uri = rtrim($uri, '/') ?: '/';
-
-    foreach ($this->routes as $route) {
-        $pattern = preg_replace('#:([a-zA-Z0-9_]+)#', '([^/]+)', $route['path']);
-        $pattern = '#^' . $pattern . '$#';
-
-        if ($route['method'] === $method && preg_match($pattern, $uri, $matches)) {
-            array_shift($matches);
-
-            $controllerClass = $route['controller'];
-            $methodName      = $route['function'];
-
-            $controller = new $controllerClass();
-            $controller->$methodName(...$matches);
-            return;
+        // Nettoyage automatique du dossier parent (ex: /AJI_NL3BO_MANAGEMENT/)
+        $baseDir = dirname($_SERVER['SCRIPT_NAME']); 
+        if ($baseDir !== '/' && strpos($uri, $baseDir) === 0) {
+            $uri = substr($uri, strlen($baseDir));
         }
+
+        $uri = rtrim($uri, '/') ?: '/';
+
+        foreach ($this->routes as $route) {
+            // Gestion des paramètres dynamiques comme :id
+            $pattern = preg_replace('#:([a-zA-Z0-9_]+)#', '([^/]+)', $route['path']);
+            $pattern = '#^' . $pattern . '$#';
+
+            if ($route['method'] === $method && preg_match($pattern, $uri, $matches)) {
+                array_shift($matches); // On enlève le premier match complet
+                
+                $controllerClass = $route['controller'];
+                $methodName = $route['function'];
+
+                if (class_exists($controllerClass)) {
+                    $controller = new $controllerClass();
+                    $controller->$methodName(...$matches);
+                    return;
+                }
+            }
+        }
+        $this->notFound();
     }
 
-    $this->notFound();
-}
-
-    // ---- 404 ----
-    private function notFound(): void
-    {
+    private function notFound(): void {
         http_response_code(404);
-        echo '
-        <!DOCTYPE html>
-        <html lang="fr">
-        <head>
-            <meta charset="UTF-8">
-            <title>404 — Page introuvable</title>
-            <link rel="stylesheet" href="/public/css/style.css">
-        </head>
-        <body style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:1rem;">
-            <h1>404</h1>
-            <p>Page introuvable</p>
-            <a href="/splash">← Retour à l\'accueil</a>
-        </body>
-        </html>';
+        echo "<h1>404 - Page non trouvée</h1><p>Le router n'a pas trouvé la route demandée.</p>";
     }
 }

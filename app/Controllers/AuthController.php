@@ -38,23 +38,16 @@ class AuthController
         $password = trim($_POST['password'] ?? '');
         $errors   = [];
 
-        // ---- VALIDATIONS ----
         if (empty($email) || empty($password)) {
             $errors[] = "Email et mot de passe sont requis.";
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Format email invalide.";
-        }
-
-        // ---- VERIFICATION BDD ----
         if (empty($errors)) {
             $user = $this->userModel->login($email, $password);
 
             if (!$user) {
                 $errors[] = "Email ou mot de passe incorrect.";
             } else {
-                // ---- DEMARRER SESSION ----
                 session_regenerate_id(true);
                 $_SESSION['user_id']   = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
@@ -91,15 +84,12 @@ class AuthController
         if (empty($name)) {
             $errors[] = "Le nom est requis.";
         }
-
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = "Email invalide.";
         }
-
         if (strlen($password) < 6) {
             $errors[] = "Mot de passe minimum 6 caractères.";
         }
-
         if ($password !== $confirm) {
             $errors[] = "Les mots de passe ne correspondent pas.";
         }
@@ -116,7 +106,8 @@ class AuthController
                 $_SESSION['user_name'] = $name;
                 $_SESSION['user_role'] = 'client';
 
-                header('Location: /dashboard/client');
+                // CORRECTION : Redirection relative sans le slash "/" au début
+                header('Location: dashboard/client');
                 exit;
             }
         }
@@ -128,18 +119,31 @@ class AuthController
     public function logout(): void
     {
         session_destroy();
-        header('Location: /splash');
+        // CORRECTION : Vers la route splash sans "/"
+        header('Location: splash');
         exit;
     }
 
     // ---- REDIRECT SELON ROLE ----
     private function redirectByRole(): void
     {
-        if ($_SESSION['user_role'] === 'admin') {
-            header('Location: /dashboard/admin');
+        // CORRECTION : Redirections relatives pour rester dans le projet
+        if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+            header('Location: dashboard/admin');
         } else {
-            header('Location: /dashboard/client');
+            header('Location: dashboard/client');
         }
         exit;
+    }
+
+    // ---- DASHBOARDS (VUES TEMPORAIRES) ----
+    public function adminDashboard() {
+        echo "<h1>Bienvenue Admin : " . htmlspecialchars($_SESSION['user_name']) . "</h1>";
+        echo "<a href='logout'>Déconnexion</a>";
+    }
+
+    public function clientDashboard() {
+        echo "<h1>Bienvenue Client : " . htmlspecialchars($_SESSION['user_name']) . "</h1>";
+        echo "<a href='logout'>Déconnexion</a>";
     }
 }

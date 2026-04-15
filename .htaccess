@@ -1,13 +1,11 @@
 RewriteEngine On
 
-# Bloquer l'accès direct aux dossiers sensibles
-RewriteRule ^app/ - [F,L]
-RewriteRule ^config/ - [F,L]
-RewriteRule ^vendor/ - [F,L]
+# 1. Sécurité : Bloquer l'accès aux dossiers sensibles
+RewriteRule ^(app|config|vendor|sql)/ - [F,L]
 
-# Laisser passer les fichiers et dossiers qui existent vraiment (CSS, images...)
+# 2. Ne pas rediriger si le fichier existe (images, css, js)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# Tout le reste → index.php
+# 3. Rediriger tout le reste vers index.php
 RewriteRule ^ index.php [QSA,L]

@@ -41,25 +41,30 @@ class User
     }
 
     // ---- REGISTER ----
-    public function register(string $name, string $email, string $password): int|false
-    {
-        if ($this->findByEmail($email)) {
-            return false;
-        }
-
-        $stmt = $this->db->prepare(
-            'INSERT INTO users (name, email, password, role)
-             VALUES (:name, :email, :password, "client")'
-        );
-
-        $stmt->execute([
-            ':name'     => htmlspecialchars(trim($name)),
-            ':email'    => strtolower(trim($email)),
-            ':password' => password_hash($password, PASSWORD_BCRYPT),
+    public function register($name, $email, $password) {
+    try {
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        
+        // Requête exacte par rapport à ta table
+        $sql = "INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, 'client')";
+        
+        $stmt = $this->db->prepare($sql);
+        
+        $result = $stmt->execute([
+            ':name'     => $name,
+            ':email'    => $email,
+            ':password' => $hashedPassword
         ]);
 
-        return (int) $this->db->lastInsertId();
+        return $result ? $this->db->lastInsertId() : false;
+
+    } catch (\PDOException $e) {
+        // CE CODE VA T'AFFICHER L'ERREUR RÉELLE (ex: email en double, colonne manquante)
+        echo "<h3>Erreur SQL détectée :</h3>";
+        echo $e->getMessage();
+        die(); 
     }
+}
 
     // ---- LOGIN ----
     public function login(string $email, string $password): array|null

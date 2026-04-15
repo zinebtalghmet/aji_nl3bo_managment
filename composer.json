@@ -1,11 +1,9 @@
 {
     "name": "aji-l3bo/management",
-    "description": "GameCafé Manager - Aji L3bo Casablanca",
     "autoload": {
         "psr-4": {
             "App\\": "app/",
             "Database\\": "config/"
         }
-    },
-    "require": {}
+    }
 }
