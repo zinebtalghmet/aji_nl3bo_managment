@@ -15,7 +15,7 @@ $router->get('/login',   [AuthController::class, 'loginForm']);
 $router->post('/login',  [AuthController::class, 'login']);
 $router->get('/register',[AuthController::class, 'registerForm']);
 $router->post('/register', [AuthController::class, 'register']);
-$router->get('/logout',  [AuthController::class, 'logout']);
+$router->get('/logout', [AuthController::class, 'logout']);
 
 // Routes Dashboard (À créer dans vos futurs Controllers)
 // Remplacez les fonctions anonymes par des appels aux contrôleurs
