@@ -11,6 +11,7 @@ use App\Controllers\GameController;
 use App\Controllers\CategoryController;
 use App\Controllers\ReservationController;
 
+
 $router = new Router();
 
 /*
