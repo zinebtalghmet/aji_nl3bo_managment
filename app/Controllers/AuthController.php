@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Models\Game;
+use App\Models\Category;
 
 class AuthController
 {
@@ -141,13 +143,19 @@ class AuthController
 
     // ---- DASHBOARDS (VUES TEMPORAIRES) ----
     public function clientDashboard() {
-    echo "<h1>Bienvenue Client : " . htmlspecialchars($_SESSION['user_name']) . "</h1>";
-    echo "<a href='/aji_nl3bo_managment/logout'>Déconnexion</a>";
-}
+        $gameModel = new Game();
+        $categoryModel = new Category();
+        $games = $gameModel->getAllGames();
+        $categories = $categoryModel->getAllCategories();
+        require __DIR__ . '/../Views/dashboard/client.php';
+    }
 
-public function adminDashboard() {
-    echo "<h1>Bienvenue Admin : " . htmlspecialchars($_SESSION['user_name']) . "</h1>";
-    echo "<a href='/aji_nl3bo_managment/logout'>Déconnexion</a>";
-}
+    public function adminDashboard() {
+        $gameModel = new Game();
+        $categoryModel = new Category();
+        $games = $gameModel->getAllGames();
+        $categories = $categoryModel->getAllCategories();
+        require __DIR__ . '/../Views/dashboard/admin.php';
+    }
     
 }

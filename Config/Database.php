@@ -17,19 +17,16 @@ class Database{
 
        }catch(PDOException $e){
         die( "Erreur".$e->getMessage());
-
        }
     }
        public static  function getInstance() :Database{
         if(self::$instance === null){
             self::$instance=new Database();
-
         }
           return self::$instance;
        }
        public function getConnexion():PDO{
         return $this->pdo;
        }
-    
 }
 ?>
