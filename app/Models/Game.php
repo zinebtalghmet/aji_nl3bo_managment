@@ -53,17 +53,7 @@ public function getAllGames(){
     $stmt = $this->conn->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
 
-public function getGamesByUser($user_id){
-    $sql='SELECT games.*, categories.name AS category
-    FROM games
-    LEFT JOIN categories ON games.category_id = categories.id
-    WHERE games.user_id = ?
-    ORDER BY games.id DESC';
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute([$user_id]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 public function getGameById($id){
@@ -76,11 +66,11 @@ public function getGameById($id){
     $stmt->execute([$id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
-public function createGame($name,$category_id, $duration,$description,$difficulty,$status,$user_id){
-$sql = 'INSERT INTO games(name,category_id,duration,description,difficulty,status,user_id)
-VALUES (?,?,?,?,?,?,?)';
+public function createGame($name,$category_id, $duration,$description,$difficulty,$status){
+$sql = 'INSERT INTO games(name,category_id,duration,description,difficulty,status)
+VALUES (?,?,?,?,?,?)';
 $stmt=$this->conn->prepare($sql);
-$stmt->execute([$name,$category_id, $duration,$description,$difficulty,$status,$user_id]);
+$stmt->execute([$name,$category_id, $duration,$description,$difficulty,$status]);
 
 }
 
