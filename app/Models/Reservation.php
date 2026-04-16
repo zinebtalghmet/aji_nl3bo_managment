@@ -15,7 +15,7 @@ class Reservation
 
     public function create(array $data): bool
     {
-        $query = "INSERT INTO reservation 
+        $query = "INSERT INTO reservations 
                   (user_id, table_id, client_name, client_phone, reserved_at, status, created_at)
                   VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -34,7 +34,7 @@ class Reservation
 
     public function getByUserId(int $user_id): array
     {
-        $query = "SELECT * FROM reservation WHERE user_id = ?";
+        $query = "SELECT * FROM reservations WHERE user_id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$user_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -42,7 +42,7 @@ class Reservation
 
     public function getById(int $id): ?array
     {
-        $query = "SELECT * FROM reservation WHERE id = ?";
+        $query = "SELECT * FROM reservations WHERE id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -50,7 +50,7 @@ class Reservation
 
     public function update(int $id, array $data): bool
     {
-        $query = "UPDATE reservation 
+        $query = "UPDATE reservations
                   SET client_name = ?, client_phone = ?, reserved_at = ?, status = ?
                   WHERE id = ?";
 
@@ -67,7 +67,7 @@ class Reservation
 
     public function delete(int $id): bool
     {
-        $query = "DELETE FROM reservation WHERE id = ?";
+        $query = "DELETE FROM reservations WHERE id = ?";
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([$id]);
     }
@@ -75,7 +75,7 @@ class Reservation
    public function getAll(): array
 {
     $query = "SELECT r.*, t.number AS table_number, t.capacity
-              FROM reservation r
+              FROM reservations r
               JOIN tables t ON r.table_id = t.id
               ORDER BY r.reserved_at DESC";
 

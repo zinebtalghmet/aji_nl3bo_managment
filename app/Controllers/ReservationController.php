@@ -56,7 +56,27 @@ class ReservationController
             $this->reservationModel->delete($id);
         }
 
-        header('Location: /reservations');
+header('Location: ' . BASE_URL . '/reservations');
         exit;
     }
+    public function edit(int $id)
+{
+    $reservation = $this->reservationModel->getById($id);
+    $tables = $this->tableModel->getFreeTables();
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $data = [
+            'client_name'  => $_POST['client_name'],
+            'client_phone' => $_POST['client_phone'],
+            'reserved_at'  => $_POST['reserved_at'],
+            'status'       => $_POST['status']
+        ];
+
+        $this->reservationModel->update($id, $data);
+        header('Location: /aji_nl3bo_managment/public/reservations');
+        exit;
+    }
+
+    require __DIR__ . '/../Views/reservations/edit.php';
+}
 }

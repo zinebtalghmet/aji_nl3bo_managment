@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Liste des Réservations</title>
-</head>
-<body>
-    <h1>Liste des Réservations</h1>
-    <a href="/reservations/create">Nouvelle réservation</a>
+<?php include __DIR__ . '/../includes/header.php'; ?>
 
-    <table border="1" cellpadding="10">
+<h1>📅 Liste des Réservations</h1>
+
+<?php if (isset($_SESSION['user_id'])) : ?>
+    <p>
+        <a href="<?= BASE_URL ?>/reservations/create" class="btn">
+            ➕ Nouvelle réservation
+        </a>
+    </p>
+<?php endif; ?>
+
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
         <tr>
             <th>ID</th>
             <th>Client</th>
@@ -18,26 +21,36 @@
             <th>Statut</th>
             <th>Actions</th>
         </tr>
-        <?php foreach ($reservations as $reservation): ?>
+    </thead>
+    <tbody>
+        <?php if (!empty($reservations)) : ?>
+            <?php foreach ($reservations as $reservation): ?>
+                <tr>
+                    <td><?= htmlspecialchars($reservation['id']) ?></td>
+                    <td><?= htmlspecialchars($reservation['client_name']) ?></td>
+                    <td><?= htmlspecialchars($reservation['client_phone']) ?></td>
+                    <td>
+                        Table <?= htmlspecialchars($reservation['table_number']); ?>
+                        (<?= htmlspecialchars($reservation['capacity']); ?> pers.)
+                    </td>
+                    <td><?= htmlspecialchars($reservation['reserved_at']) ?></td>
+                    <td><?= htmlspecialchars($reservation['status']) ?></td>
+                    <td>
+                        <a href="<?= BASE_URL ?>/reservations/edit/<?= $reservation['id'] ?>">✏️ Modifier</a>
+                        |
+                        <a href="<?= BASE_URL ?>/reservations/delete/<?= $reservation['id'] ?>"
+                           onclick="return confirm('Annuler cette réservation ?')">
+                           🗑️ Annuler
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else : ?>
             <tr>
-                <td><?= htmlspecialchars($reservation['id']) ?></td>
-                <td><?= htmlspecialchars($reservation['client_name']) ?></td>
-                <td><?= htmlspecialchars($reservation['client_phone']) ?></td>
-                <td>
-                    Table <?= htmlspecialchars($reservation['table_number']); ?>
-                    (<?= htmlspecialchars($reservation['capacity']); ?> pers.)
-                </td>
-                <td><?= htmlspecialchars($reservation['reserved_at']) ?></td>
-                <td><?= htmlspecialchars($reservation['status']) ?></td>
-                <td>
-                    <a href="/reservations/edit/<?= $reservation['id'] ?>">Modifier</a>
-                    <a href="/reservations/cancel/<?= $reservation['id'] ?>"
-                       onclick="return confirm('Annuler cette réservation ?')">
-                       Annuler
-                    </a>
-                </td>
+                <td colspan="7" style="text-align:center;">Aucune réservation trouvée.</td>
             </tr>
-        <?php endforeach; ?>
-    </table>
-</body>
-</html>
+        <?php endif; ?>
+    </tbody>
+</table>
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>

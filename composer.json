@@ -1,11 +1,9 @@
 {
-    "name": "game/cafe",
-    "description": "Application de gestion pour café de jeux",
+    "name": "aji-l3bo/management",
     "autoload": {
         "psr-4": {
             "App\\": "app/",
             "Database\\": "config/"
         }
-    },
-    "require": {}
+    }
 }

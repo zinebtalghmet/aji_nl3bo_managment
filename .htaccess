@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteBase /aji_nl3bo_managment/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]

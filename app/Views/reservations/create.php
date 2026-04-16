@@ -34,6 +34,5 @@
         <button type="submit">Réserver</button>
     </form>
 
-    <a href="/reservations">Retour</a>
-</body>
+<a href="<?= BASE_URL ?>/dashboard/client">Retour au dashboard</a></body>
 </html>
