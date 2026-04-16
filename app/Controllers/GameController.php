@@ -16,7 +16,8 @@ class GameController{
     }
 
     public function index(){
-        $games = $this->gameModel->getAllGames();
+        $user_id = $_SESSION['user_id'];
+        $games = $this->gameModel->getGamesByUser($user_id);
         require __DIR__ . '/../Views/games/index.php';
     }
 
@@ -34,7 +35,8 @@ class GameController{
         $difficulty = $_POST['difficulty'];
         $status = $_POST['status'];
 
-        $this->gameModel->createGame($name, $category_id,$duration,$description,$difficulty,$status);
+        $user_id = $_SESSION['user_id'];
+        $this->gameModel->createGame($name, $category_id, $duration, $description, $difficulty, $status, $user_id);
         header('Location: ' . BASE_URL . '/games');
         exit;
     }
