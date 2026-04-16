@@ -9,7 +9,7 @@ use App\Router;
 use App\Controllers\AuthController;
 use App\Controllers\GameController;
 use App\Controllers\CategoryController;
-
+use App\Controllers\ReservationController;
 $router = new Router();
 
 /*
@@ -33,6 +33,17 @@ $router->get('/logout', [AuthController::class, 'logout']);
 $router->get('/dashboard/admin', [AuthController::class, 'adminDashboard']);
 $router->get('/dashboard/client', [AuthController::class, 'clientDashboard']);
 
+/*
+|--------------------------------------------------------------------------
+| ROUTES RESERVATIONS
+|--------------------------------------------------------------------------
+*/
+$router->get('/reservations', [ReservationController::class, 'index']);
+$router->get('/reservations/create', [ReservationController::class, 'create']);
+$router->post('/reservations/create', [ReservationController::class, 'create']);
+$router->get('/reservations/edit/:id', [ReservationController::class, 'edit']);
+$router->post('/reservations/edit/:id', [ReservationController::class, 'edit']);
+$router->get('/reservations/delete/:id', [ReservationController::class, 'cancel']);
 /*
 |--------------------------------------------------------------------------
 | ROUTES GAMES
