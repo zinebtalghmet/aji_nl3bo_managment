@@ -1,31 +1,55 @@
 <?php include __DIR__ . '/../includes/header.php'; ?>
 
-<h1>🏠 Dashboard Client</h1>
+<main>
+    <div class="dashboard-container">
 
-<p>Bienvenue <?= htmlspecialchars($_SESSION['user_name']) ?> 👋</p>
+        <!-- Header -->
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">🏠 Dashboard Client</h1>
+            <p class="dashboard-subtitle">
+                Bienvenue, <strong><?= htmlspecialchars($_SESSION['user_name']) ?></strong> 👋
+            </p>
+        </div>
 
-<hr>
+        <!-- Stat Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-title">Mes Réservations</div>
+                <div class="stat-value"><?= $totalReservations ?? 0 ?></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Confirmées</div>
+                <div class="stat-value"><?= $confirmedCount ?? 0 ?></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">En Attente</div>
+                <div class="stat-value"><?= $pendingCount ?? 0 ?></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Annulées</div>
+                <div class="stat-value"><?= $cancelledCount ?? 0 ?></div>
+            </div>
+        </div>
 
-<h3>Actions rapides</h3>
+        <!-- Actions rapides -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">⚡ Actions rapides</span>
+            </div>
+            <div style="padding: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+                <a href="<?= BASE_URL ?>/reservations" class="btn btn-primary">
+                    📅 Voir mes réservations
+                </a>
+                <a href="<?= BASE_URL ?>/reservations/create" class="btn btn-ghost">
+                    ➕ Nouvelle réservation
+                </a>
+                <a href="<?= BASE_URL ?>/logout" class="btn btn-danger">
+                    🔓 Déconnexion
+                </a>
+            </div>
+        </div>
 
-<ul>
-    <li>
-        <a href="<?= BASE_URL ?>/reservations">
-            📅 Voir mes réservations
-        </a>
-    </li>
-
-    <li>
-        <a href="<?= BASE_URL ?>/reservations/create">
-            ➕ Créer une réservation
-        </a>
-    </li>
-
-    <li>
-        <a href="<?= BASE_URL ?>/logout">
-            🔓 Déconnexion
-        </a>
-    </li>
-</ul>
+    </div>
+</main>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>
