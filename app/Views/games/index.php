@@ -1,10 +1,3 @@
-<?php
-require_once __DIR__ . '/vendor/autoload.php';
-use App\Controllers\GameController;
-$controller = new GameController();
-$controller->index();
-
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,7 +9,7 @@ $controller->index();
 </head>
 <body>
         <h1>Liste des jeux </h1>
-    <a href="/games/create">➕ Ajouter un jeu</a>
+    <a href="<?= BASE_URL ?>/games/create"> Ajouter un jeu</a>
     <table>        
     <thead>
             <tr>
@@ -40,9 +33,9 @@ $controller->index();
                     <td><?= $game['status']?></td>
 
                     <td>
-                        <a href="/games/show/<?= $game['id']?>"><i class="fa-solid fa-eye"></i></a>
-                        <a href="/games/edit/<?= $game['id']?>"><i class="fa-solid fa-pen"></i></a>
-                        <a href="/games/delete/<?= $game['id']?>"><i class="fa-solid fa-trash"></i></a>
+                        <a href="<?= BASE_URL ?>/games/show/<?= $game['id']?>"><i class="fa-solid fa-eye"></i></a>
+                        <a href="<?= BASE_URL ?>/games/edit/<?= $game['id']?>"><i class="fa-solid fa-pen"></i></a>
+                        <a href="<?= BASE_URL ?>/games/destroy/<?= $game['id']?>"><i class="fa-solid fa-trash"></i></a>
             </td>
             </tr>
             <?php endforeach; ?>   

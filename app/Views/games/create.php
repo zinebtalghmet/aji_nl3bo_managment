@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Ajouter un jeu</h1>
-    <form action= "/games/store" method = "POST">
+    <form action="<?= BASE_URL ?>/games/store" method="POST">
         <label>Nom:</label>
         <input type="text" name="name" required><br><br>
 
@@ -44,7 +44,7 @@
         </select><br><br>
 
         <button type="submit">Ajouter</button>
-        <a href="/games">Annuler</a>
+        <a href="<?= BASE_URL ?>/games">Annuler</a>
     </form>
 
     

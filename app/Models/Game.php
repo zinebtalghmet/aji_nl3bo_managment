@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
+
 use PDO;
+use Config\Database;
 
 class Game{
     private $conn;
@@ -12,9 +14,9 @@ private $description;
 private $difficulty;
 private $status;
 
-public function __construct ($db){
-    $db= new Database();
-    $this->conn = $db;
+public function __construct(){
+    $database = new Database();
+    $this->conn = $database->connect();
 }
 
 public function getId(){
@@ -60,7 +62,7 @@ public function getGameById($id){
     $sql ='SELECT games.*,categories.name AS category
     FROM games
     LEFT JOIN categories ON games.category_id=categories.id
-    WHERE id = ?';
+    WHERE games.id = ?';
 
     $stmt=$this->conn->prepare($sql);
     $stmt->execute([$id]);
@@ -76,8 +78,8 @@ $stmt->execute([$name,$category_id, $duration,$description,$difficulty,$status])
 
 public function updateGame($id,$name,$category_id, $duration,$description,$difficulty,$status){
     $sql='UPDATE games SET name =?,category_id=?,duration=?,description=?,difficulty=?,status=?
-    WHERE id = ?';
-$stmt = $this-conn->prepare($sql);
+    WHERE games.id = ?';
+$stmt = $this->conn->prepare($sql);
 $stmt->execute([$name,$category_id, $duration,$description,$difficulty,$status,$id]);
 }
 
