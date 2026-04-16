@@ -10,7 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SurfSchool Manager | Taghazout</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/Marrakech_Food_Lovers/public/css/style.css">
+    <link rel="stylesheet" href="/aji_nl3bo_managment/public/css/style.css">
 </head>
 <body class="splash-body">
 
