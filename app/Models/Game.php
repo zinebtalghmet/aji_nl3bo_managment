@@ -2,7 +2,6 @@
 namespace App\Models;
 
 use PDO;
-use Config\Database;
 
 class Game{
     private $conn;
@@ -15,8 +14,7 @@ private $difficulty;
 private $status;
 
 public function __construct(){
-    $database = new Database();
-    $this->conn = $database->connect();
+    $this->conn = \Database\Database::getInstance()->getConnexion();
 }
 
 public function getId(){

@@ -7,15 +7,19 @@ class GameController{
     private $categoryModel;  
 
     public function __construct(){
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /aji_nl3bo_managment/login');
+            exit;
+        }
         $this->gameModel = new Game();
         $this->categoryModel = new Category();
     }
 
     public function index(){
-        $games =$this->gameModel->getAllGames();
+        $games = $this->gameModel->getAllGames();
         require __DIR__ . '/../Views/games/index.php';
-
     }
+
 
     public function create(){
         $categories = $this->categoryModel->getAllCategories();
