@@ -10,6 +10,7 @@ use App\Controllers\AuthController;
 use App\Controllers\GameController;
 use App\Controllers\CategoryController;
 use App\Controllers\ReservationController;
+use App\Controllers\SessionController;
 $router = new Router();
 
 /*
@@ -24,6 +25,14 @@ $router->post('/login', [AuthController::class, 'login']);
 $router->get('/register', [AuthController::class, 'registerForm']);
 $router->post('/register', [AuthController::class, 'register']);
 $router->get('/logout', [AuthController::class, 'logout']);
+
+
+//Routes de session
+$router->get('/admin/sessions',              [SessionController::class, 'dashboard']);
+$router->get('/admin/sessions/create',       [SessionController::class, 'create']);
+$router->post('/admin/sessions',             [SessionController::class, 'store']);
+$router->post('/admin/sessions/:id/end',     [SessionController::class, 'end']);
+$router->get('/admin/sessions/history',      [SessionController::class, 'history']);
 
 /*
 |--------------------------------------------------------------------------
