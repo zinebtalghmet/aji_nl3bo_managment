@@ -1,5 +1,11 @@
 RewriteEngine On
-RewriteBase /aji_nl3bo_managment/
+
+# 1. Sécurité : Bloquer l'accès aux dossiers sensibles
+RewriteRule ^(app|config|vendor|sql)/ - [F,L]
+
+# 2. Ne pas rediriger si le fichier existe (images, css, js)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+
+# 3. Rediriger tout le reste vers index.php
 RewriteRule ^ index.php [QSA,L]

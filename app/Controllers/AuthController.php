@@ -102,7 +102,7 @@ class AuthController
             $errors[] = "Cet email est déjà utilisé.";
         } else {
             // Redirection vers login après inscription
-header('Location: ' . BASE_URL . '/login');
+            header('Location: /aji_nl3bo_managment/login');
             exit;
         }
     }
@@ -123,7 +123,7 @@ header('Location: ' . BASE_URL . '/login');
             );
         }
         
-header('Location: ' . BASE_URL . '/login');
+        header('Location: /aji_nl3bo_managment/login');
         exit;
     }
 
@@ -132,26 +132,22 @@ header('Location: ' . BASE_URL . '/login');
     {
         // CORRECTION : Redirections relatives pour rester dans le projet
         if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
-             header('Location: ' . BASE_URL . '/dashboard/admin');
+            header('Location: dashboard/admin');
         } else {
-             header('Location: ' . BASE_URL . '/dashboard/client');        }
+            header('Location: dashboard/client');
+        }
         exit;
     }
 
     // ---- DASHBOARDS (VUES TEMPORAIRES) ----
-   public function clientDashboard(): void
-{
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: ' . BASE_URL . '/login');
-        exit;
-    }
-
-    require_once __DIR__ . '/../Views/dashboard/client.php';
+    public function clientDashboard() {
+    echo "<h1>Bienvenue Client : " . htmlspecialchars($_SESSION['user_name']) . "</h1>";
+    echo "<a href='/aji_nl3bo_managment/logout'>Déconnexion</a>";
 }
+
 public function adminDashboard() {
     echo "<h1>Bienvenue Admin : " . htmlspecialchars($_SESSION['user_name']) . "</h1>";
     echo "<a href='/aji_nl3bo_managment/logout'>Déconnexion</a>";
 }
-
     
 }
