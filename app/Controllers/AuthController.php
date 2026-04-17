@@ -144,10 +144,10 @@ class AuthController
     // ---- DASHBOARDS (VUES TEMPORAIRES) ----
     public function clientDashboard() {
         $gameModel = new Game();
-        //$categoryModel = new Category();
-        //$user_id = $_SESSION['user_id'];
+        $categoryModel = new Category();
+       $user_id = $_SESSION['user_id'];
         $games = $gameModel->getAllGames();
-        $games = $gameModel->getGamesByUser($user_id);
+        //$games = $gameModel->getGamesByUser($user_id);
         $categories = $categoryModel->getAllCategories();
         require __DIR__ . '/../Views/dashboard/client.php';
     }
