@@ -40,8 +40,8 @@ class ReservationController
 
             $this->tableModel->updateStatus($data['table_id'], 'occupied');
 
-            header('Location: /reservations');
-            exit;
+            header('Location: ' . BASE_URL . '/reservations/my');
+exit;
         }
 
         require __DIR__ . '/../Views/reservations/create.php';

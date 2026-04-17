@@ -22,6 +22,9 @@
                 <a href="<?= BASE_URL ?>/admin/sessions" class="btn btn-primary">
                     <i class="fa-solid fa-play"></i> Sessions
                 </a>
+                <a href="<?= BASE_URL ?>/tables">
+    🪑 Gérer les tables
+</a>
                 <a href="<?= BASE_URL ?>/logout" class="btn btn-danger">
                     <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
                 </a>
