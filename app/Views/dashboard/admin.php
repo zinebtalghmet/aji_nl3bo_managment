@@ -19,6 +19,9 @@
                 <a href="<?= BASE_URL ?>/reservations" class="btn btn-primary">
                      Voir les réservations
                 </a>
+                <a href="<?= BASE_URL ?>/tables">
+    🪑 Gérer les tables
+</a>
                 <a href="<?= BASE_URL ?>/logout" class="btn btn-danger">
                     <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
                 </a>
