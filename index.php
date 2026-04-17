@@ -11,6 +11,7 @@ use App\Controllers\GameController;
 use App\Controllers\CategoryController;
 use App\Controllers\ReservationController;
 use App\Controllers\SessionController;
+use App\Controllers\TableController;
 $router = new Router();
 
 /*
@@ -94,5 +95,9 @@ $router->post('/categories/store', [CategoryController::class, 'store']);
 $router->get('/categories/edit/:id', [CategoryController::class, 'edit']);
 $router->post('/categories/update/:id', [CategoryController::class, 'update']);
 $router->get('/categories/destroy/:id', [CategoryController::class, 'destroy']);
+/*----------------------------------
+-----------------------table ------------------------------------*/
+$router->get('/tables', [TableController::class, 'index']);
+$router->post('/tables/update/:id', [TableController::class, 'updateStatus']);
 
 $router->dispatch();
