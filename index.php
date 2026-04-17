@@ -66,6 +66,9 @@ $router->get('/games/edit/:id', [GameController::class, 'edit']);
 $router->post('/games/update/:id', [GameController::class, 'update']);
 $router->get('/games/destroy/:id', [GameController::class, 'destroy']);
 
+$router->get('/games',           [GameController::class, 'index']);
+$router->get('/games/show/:id',  [GameController::class, 'show']);
+
 
 /*
 |--------------------------------------------------------------------------
