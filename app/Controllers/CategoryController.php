@@ -26,7 +26,7 @@ class CategoryController {
     public function store() {
         $name = $_POST['name'];
         $this->categoryModel->createCategory($name);
-        header('Location: /aji_nl3bo_managment/categories');
+        header('Location: /aji_nl3bo_managment/dashboard/admin');
         exit;
     }
 
@@ -38,13 +38,13 @@ class CategoryController {
     public function update($id) {
         $name = $_POST['name'];
         $this->categoryModel->updateCategory($id, $name);
-        header('Location: /aji_nl3bo_managment/categories');
+        header('Location: /aji_nl3bo_managment/dashboard/admin');
         exit;
     }
 
     public function destroy($id) {
         $this->categoryModel->delete($id);
-        header('Location: /aji_nl3bo_managment/categories');
+        header('Location: /aji_nl3bo_managment/dashboard/admin');
         exit;
     }
 }
