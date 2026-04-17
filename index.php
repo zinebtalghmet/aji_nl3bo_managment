@@ -53,6 +53,7 @@ $router->post('/reservations/create', [ReservationController::class, 'create']);
 $router->get('/reservations/edit/:id', [ReservationController::class, 'edit']);
 $router->post('/reservations/edit/:id', [ReservationController::class, 'edit']);
 $router->get('/reservations/delete/:id', [ReservationController::class, 'cancel']);
+$router->get('/reservations/my', [ReservationController::class, 'myReservations']);
 /*
 |--------------------------------------------------------------------------
 | ROUTES GAMES

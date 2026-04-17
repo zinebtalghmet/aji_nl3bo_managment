@@ -19,9 +19,9 @@
                 <span class="card-title">⚡ Actions rapides</span>
             </div>
             <div style="padding: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
-                <a href="<?= BASE_URL ?>/reservations" class="btn btn-primary">
-                    📅 Voir mes réservations
-                </a>
+                <a href="<?= BASE_URL ?>/reservations/my" class="btn btn-primary">
+    📅 Mes réservations
+</a>
                 <a href="<?= BASE_URL ?>/reservations/create" class="btn btn-ghost">
                     ➕ Nouvelle réservation
                 </a>

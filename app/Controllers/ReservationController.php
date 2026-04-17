@@ -27,13 +27,14 @@ class ReservationController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
-                'user_id' => $_POST['user_id'] ?? null,
+                  'user_id' => $_SESSION['user_id'],
                 'table_id' => $_POST['table_id'],
                 'client_name' => $_POST['client_name'],
                 'client_phone' => $_POST['client_phone'],
                 'reserved_at' => $_POST['reserved_at'],
-                'status' => 'confirmed'
+                'status' => 'pending'
             ];
+             
 
             $this->reservationModel->create($data);
 
@@ -73,10 +74,22 @@ header('Location: ' . BASE_URL . '/reservations');
         ];
 
         $this->reservationModel->update($id, $data);
-        header('Location: /aji_nl3bo_managment/public/reservations');
+        header('Location: ' . BASE_URL . '/reservations');
         exit;
+    
     }
 
     require __DIR__ . '/../Views/reservations/edit.php';
+}
+public function myReservations()
+{
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /login');
+        exit;
+    }
+
+    $reservations = $this->reservationModel->getByUserId($_SESSION['user_id']);
+
+    require __DIR__ . '/../Views/reservations/my_reservations.php';
 }
 }
