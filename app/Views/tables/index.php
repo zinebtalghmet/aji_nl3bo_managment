@@ -4,7 +4,7 @@
 
 <table border="1" cellpadding="10">
     <tr>
-        <th>Numéro</th>
+        <th>Numero</th>
         <th>Status</th>
         <th>Action</th>
     </tr>
