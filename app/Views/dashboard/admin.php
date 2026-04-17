@@ -16,6 +16,9 @@
                 <a href="<?= BASE_URL ?>/categories/create" class="btn btn-ghost">
                     <i class="fa-solid fa-folder-plus"></i> Ajouter une catégorie
                 </a>
+                <a href="<?= BASE_URL ?>/reservations" class="btn btn-primary">
+                     Voir les réservations
+                </a>
                 <a href="<?= BASE_URL ?>/logout" class="btn btn-danger">
                     <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
                 </a>
