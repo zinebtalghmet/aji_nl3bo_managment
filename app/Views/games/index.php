@@ -146,23 +146,13 @@
                         ">🎯 <?= htmlspecialchars($game['difficulty']) ?></span>
 
                         <?php if ($game['status'] === 'disponible'): ?>
-                            <span style="
-                                font-size: 12px;
-                                padding: 3px 10px;
-                                background: #d1fae5;
-                                color: #065f46;
-                                border-radius: 999px;
-                                font-weight: 500;
-                            ">🟢 Disponible</span>
+                            <span style="font-size:12px;padding:3px 10px;background:#d1fae5;color:#065f46;border-radius:999px;font-weight:500;">✅ Disponible</span>
+                        <?php elseif ($game['status'] === 'en_cours'): ?>
+                            <span style="font-size:12px;padding:3px 10px;background:#fef3c7;color:#92400e;border-radius:999px;font-weight:500;">🎮 En cours</span>
+                        <?php elseif ($game['status'] === 'maintenance'): ?>
+                            <span style="font-size:12px;padding:3px 10px;background:#f1f5f9;color:#475569;border-radius:999px;font-weight:500;">🔧 Maintenance</span>
                         <?php else: ?>
-                            <span style="
-                                font-size: 12px;
-                                padding: 3px 10px;
-                                background: #fee2e2;
-                                color: #991b1b;
-                                border-radius: 999px;
-                                font-weight: 500;
-                            ">🔴 En cours</span>
+                            <span style="font-size:12px;padding:3px 10px;background:#fee2e2;color:#991b1b;border-radius:999px;font-weight:500;">❌ Indisponible</span>
                         <?php endif; ?>
                     </div>
 

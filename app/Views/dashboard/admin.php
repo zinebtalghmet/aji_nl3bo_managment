@@ -34,11 +34,11 @@
             </div>
             <div class="stat-card">
                 <div class="stat-title">Disponibles</div>
-                <div class="stat-value"><?= count(array_filter($games, fn($g) => ($g['status'] ?? '') === 'available')) ?></div>
+                <div class="stat-value"><?= count(array_filter($games, fn($g) => ($g['status'] ?? '') === 'disponible')) ?></div>
             </div>
             <div class="stat-card">
                 <div class="stat-title">Indisponibles</div>
-                <div class="stat-value"><?= count(array_filter($games, fn($g) => ($g['status'] ?? '') !== 'available')) ?></div>
+                <div class="stat-value"><?= count(array_filter($games, fn($g) => ($g['status'] ?? '') !== 'disponible')) ?></div>
             </div>
         </div>
 
@@ -152,8 +152,19 @@
                         <td>
                             <?php
                                 $status = $game['status'] ?? '';
-                                $statusClass = $status === 'available' ? 'badge-green' : 'badge-gray';
-                                $statusLabel = $status === 'available' ? '✅ Disponible' : '❌ Indisponible';
+                                if ($status === 'disponible') {
+                                    $statusClass = 'badge-green';
+                                    $statusLabel = '✅ Disponible';
+                                } elseif ($status === 'en_cours') {
+                                    $statusClass = 'badge-pending';
+                                    $statusLabel = '🎮 En cours';
+                                } elseif ($status === 'maintenance') {
+                                    $statusClass = 'badge-gray';
+                                    $statusLabel = '🔧 Maintenance';
+                                } else {
+                                    $statusClass = 'badge-gray';
+                                    $statusLabel = '❌ Indisponible';
+                                }
                             ?>
                             <span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span>
                         </td>
