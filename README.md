@@ -116,7 +116,7 @@ namespace App\Models;
 ### 1. Cloner le projet
 
 ```bash id="v3k8d2"
-git clone https://github.com/user/AJI_NL3BO_MANAGEMENT.git
+git clone https://github.com/zinebtalghmet/AJI_NL3BO_MANAGEMENT.git
 cd AJI_NL3BO_MANAGEMENT
 ```
 
@@ -136,15 +136,11 @@ composer dump-autoload
 * Importer le fichier SQL fourni
 * Configurer `config/Database.php`
 
----
 
-### 4. Lancer le serveur
 
-```bash id="z9k2d1"
-php -S localhost:8000
-```
 
----
+
+
 
 ## ▶️ Utilisation
 
@@ -266,14 +262,3 @@ php -S localhost:8000
 
 ---
 
-## 📌 Améliorations possibles
-
-* 📊 Statistiques admin
-* ⭐ Système de notation
-* 🤖 Recommandations
-
----
-
-## 📄 Licence
-
-Projet académique – YouCode / Simplon
