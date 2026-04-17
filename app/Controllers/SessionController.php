@@ -30,7 +30,7 @@ class SessionController
     {
         $this->checkAdmin();
 
-        $users  = $this->userModel->getAllUsers();
+        $users  = $this->userModel->getClients();
         $games  = $this->gameModel->getAllGames();
         $tables = $this->tableModel->getFreeTables();
 
@@ -60,7 +60,7 @@ class SessionController
         }
 
         // Erreurs → repasser les selects à la vue
-        $users  = $this->userModel->getAllUsers();
+        $users  = $this->userModel->getClients();
         $games  = $this->gameModel->getAllGames();
         $tables = $this->tableModel->getFreeTables();
 

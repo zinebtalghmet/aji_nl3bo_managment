@@ -125,6 +125,16 @@ class User
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // ---- CLIENTS ONLY ----
+    public function getClients(): array
+    {
+        $stmt = $this->db->prepare(
+            'SELECT id, name, email FROM users WHERE role = "client" ORDER BY name ASC'
+        );
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // ---- ADMIN : supprimer un user ----
     public function deleteUser(int $id): bool
     {
