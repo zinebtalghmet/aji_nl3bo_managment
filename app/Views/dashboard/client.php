@@ -25,9 +25,7 @@
                 <a href="<?= BASE_URL ?>/reservations/create" class="btn btn-ghost">
                     ➕ Nouvelle réservation
                 </a>
-                <a href="<?= BASE_URL ?>/logout" class="btn btn-danger">
-                    🔓 Déconnexion
-                </a>
+                
             </div>
         </div>
 

@@ -1,19 +1,81 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter une catégorie</title>
-</head>
-<body>
-    <h1>Ajouter une catégorie</h1>
+<?php include __DIR__ . '/../includes/header.php'; ?>
 
-    <form action="<?= BASE_URL ?>/categories/store" method="POST">
-        <label>Nom:</label>
-        <input type="text" name="name" required><br><br>
+<div class="dashboard-container">
+    <div style="max-width: 500px; margin: 0 auto;">
 
-        <button type="submit">Ajouter</button>
-        <a href="<?= BASE_URL ?>/categories">Annuler</a>
-    </form>
-</body>
-</html>
+        <div style="margin-bottom: 24px;">
+            <a href="<?= BASE_URL ?>/categories" style="
+                color: var(--text-secondary);
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 500;
+            ">← Retour aux catégories</a>
+            <h1 class="dashboard-title" style="margin-top: 12px;">➕ Ajouter une catégorie</h1>
+        </div>
+
+        <div style="
+            background: white;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            padding: 32px;
+        ">
+            <form action="<?= BASE_URL ?>/categories/store" method="POST">
+
+                <div style="margin-bottom: 24px;">
+                    <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">
+                        Nom de la catégorie
+                    </label>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Ex: Stratégie, Famille, Ambiance..."
+                        required
+                        style="
+                            width: 100%;
+                            padding: 10px 14px;
+                            border: 1px solid var(--border);
+                            border-radius: var(--radius-md);
+                            font-size: 14px;
+                            color: var(--text-primary);
+                            outline: none;
+                            box-sizing: border-box;
+                        "
+                        onfocus="this.style.borderColor='var(--primary)'"
+                        onblur="this.style.borderColor='var(--border)'"
+                    >
+                </div>
+
+                <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                    <a href="<?= BASE_URL ?>/categories" style="
+                        padding: 10px 20px;
+                        border: 1px solid var(--border);
+                        border-radius: var(--radius-md);
+                        text-decoration: none;
+                        color: var(--text-secondary);
+                        font-size: 14px;
+                        font-weight: 500;
+                    ">Annuler</a>
+
+                    <button type="submit" style="
+                        padding: 10px 24px;
+                        background: var(--primary);
+                        color: white;
+                        border: none;
+                        border-radius: var(--radius-md);
+                        font-size: 14px;
+                        font-weight: 600;
+                        cursor: pointer;
+                    "
+                    onmouseover="this.style.background='var(--primary-hover)'"
+                    onmouseout="this.style.background='var(--primary)'">
+                        ➕ Ajouter
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>
