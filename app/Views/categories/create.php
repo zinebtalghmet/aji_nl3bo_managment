@@ -1,19 +1,22 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter une catégorie</title>
-</head>
-<body>
-    <h1>Ajouter une catégorie</h1>
+<?php include __DIR__ . '/../includes/header.php'; ?>
 
-    <form action="<?= BASE_URL ?>/categories/store" method="POST">
-        <label>Nom:</label>
-        <input type="text" name="name" required><br><br>
+<div class="auth-wrapper">
+    <div class="auth-container">
+        <h2>Ajouter une catégorie</h2>
 
-        <button type="submit">Ajouter</button>
-        <a href="<?= BASE_URL ?>/categories">Annuler</a>
-    </form>
-</body>
-</html>
+        <form action="<?= BASE_URL ?>/categories/store" method="POST">
+            <div class="form-group">
+                <label class="form-label">Nom de la catégorie</label>
+                <input type="text" name="name" class="form-input" placeholder="Ex: Jeux de société" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Ajouter</button>
+
+            <p class="auth-link">
+                <a href="<?= BASE_URL ?>/dashboard/admin">Retour au dashboard</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>

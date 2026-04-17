@@ -1,52 +1,63 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un jeu</title>
-</head>
-<body>
-    <h1>Ajouter un jeu</h1>
-    <form action="<?= BASE_URL ?>/games/store" method="POST">
-        <label>Nom:</label>
-        <input type="text" name="name" required><br><br>
+<?php include __DIR__ . '/../includes/header.php'; ?>
 
-        <label>Catégorie:</label>
-        <select name="category_id" required>
-            <option value = "">- Choisir une catégorie -</option>
-            <?php foreach ($categories as $category): ?>
-                <option value="<?=$category['id']?>">
-                    <?= $category['name']?>
-            </option>
-            <?php endforeach; ?>        
-            </select><br><br>
+<div class="auth-wrapper">
+    <div class="auth-container">
+        <h2>Ajouter un jeu</h2>
 
-        <label>Durée (min):</label>
-        <input type="number" name="duration" required><br><br>
+        <form action="<?= BASE_URL ?>/games/store" method="POST">
+            <div class="form-group">
+                <label class="form-label">Nom du jeu</label>
+                <input type="text" name="name" class="form-input" placeholder="Ex: FIFA 2026" required>
+            </div>
 
-        <label>Description:</label>
-        <textarea name="description"></textarea><br><br>
+            <div class="form-group">
+                <label class="form-label">Catégorie</label>
+                <select name="category_id" class="form-input" required>
+                    <option value="">-- Choisir une catégorie --</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-        <label>Difficulté:</label>
-        <select name="difficulty">
-            <option value="facile">Facile</option>
-            <option value="moyen">Moyen</option>
-            <option value="difficile">Difficile</option>
-            <option value="expert">Expert</option>
-        </select><br><br>
+            <div class="form-group">
+                <label class="form-label">Durée (minutes)</label>
+                <input type="number" name="duration" class="form-input" placeholder="Ex: 30" required>
+            </div>
 
-        <label>Statut:</label>
-        <select name="status" required>
-            <option value="">-- Choisir un statut --</option>
-            <option value="disponible">Disponible</option>
-            <option value="en_cours">En cours</option>
-            <option value="maintenance">Maintenance</option>
-        </select><br><br>
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-input" rows="3" placeholder="Description du jeu..."></textarea>
+            </div>
 
-        <button type="submit">Ajouter</button>
-        <a href="<?= BASE_URL ?>/games">Annuler</a>
-    </form>
+            <div class="form-group">
+                <label class="form-label">Difficulté</label>
+                <select name="difficulty" class="form-input" required>
+                    <option value="">-- Choisir --</option>
+                    <option value="facile">Facile</option>
+                    <option value="moyen">Moyen</option>
+                    <option value="difficile">Difficile</option>
+                    <option value="expert">Expert</option>
+                </select>
+            </div>
 
-    
-</body>
-</html>
+            <div class="form-group">
+                <label class="form-label">Statut</label>
+                <select name="status" class="form-input" required>
+                    <option value="">-- Choisir --</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="en_cours">En cours</option>
+                    <option value="maintenance">Maintenance</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Ajouter le jeu</button>
+
+            <p class="auth-link">
+                <a href="<?= BASE_URL ?>/dashboard/admin">Retour au dashboard</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>
