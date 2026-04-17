@@ -260,5 +260,5 @@ composer dump-autoload
 * ✅ Composer autoload
 * ✅ MVC strict
 
----
+
 
