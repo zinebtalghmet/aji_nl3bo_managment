@@ -9,16 +9,8 @@
             <p class="dashboard-subtitle">Gérez toutes vos réservations en un coup d'œil.</p>
         </div>
 
-        <!-- Bouton Nouvelle réservation -->
-        <?php if (isset($_SESSION['user_id'])) : ?>
-        <div style="margin-bottom: 20px;">
-            <a href="<?= BASE_URL ?>/reservations/create" class="btn btn-primary">
-                ➕ Nouvelle réservation
-            </a>
-        </div>
-        <?php endif; ?>
+       
 
-        <!-- Tableau -->
         <div class="card">
             <div class="card-header">
                 <span class="card-title">📋 Réservations</span>
@@ -55,7 +47,7 @@
                                     'confirmed' => 'badge-green',
                                     'pending'   => 'badge-pending',
                                     'cancelled' => 'badge-gray',
-                                    default     => 'badge-gray',
+                                    default     => 'badge-pending',
                                 };
                                 $statusLabel = match($status) {
                                     'confirmed' => '✅ Confirmée',
@@ -86,10 +78,7 @@
             <div class="empty-state">
                 <div class="empty-icon">📭</div>
                 <div class="empty-title">Aucune réservation trouvée</div>
-                <div class="empty-desc">Commencez par créer votre première réservation.</div>
-                <a href="<?= BASE_URL ?>/reservations/create" class="btn btn-primary" style="margin-top: 16px;">
-                    ➕ Créer une réservation
-                </a>
+                
             </div>
             <?php endif; ?>
         </div>
