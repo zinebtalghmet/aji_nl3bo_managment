@@ -95,4 +95,17 @@ $router->get('/categories/edit/:id', [CategoryController::class, 'edit']);
 $router->post('/categories/update/:id', [CategoryController::class, 'update']);
 $router->get('/categories/destroy/:id', [CategoryController::class, 'destroy']);
 
+
+
+/*
+|--------------------------------------------------------------------------
+| ROUTES SESSIONS
+|--------------------------------------------------------------------------
+*/
+$router->get('/admin/sessions', [SessionController::class, 'dashboard']);
+$router->get('/admin/sessions/create', [SessionController::class, 'create']);
+$router->post('/admin/sessions', [SessionController::class, 'store']);
+$router->post('/admin/sessions/:id/end', [SessionController::class, 'end']);
+$router->get('/admin/sessions/history', [SessionController::class, 'history']);
+
 $router->dispatch();

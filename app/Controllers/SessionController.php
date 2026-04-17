@@ -6,34 +6,33 @@ use App\Models\Session;
 use App\Models\Reservation;
 use App\Models\Game;
 use App\Models\Table;
+use App\Models\User;
 
 class SessionController
 {
     // ---- ATTRIBUTS ----
-    private Session     $sessionModel;
-    private Reservation $reservationModel;
-    private Game        $gameModel;
-    private Table       $tableModel;
+    private Session $sessionModel;
+    private Game    $gameModel;
+    private Table   $tableModel;
+    private User    $userModel;
 
     // ---- CONSTRUCTEUR ----
     public function __construct()
     {
-        $this->sessionModel     = new Session();
-        $this->reservationModel = new Reservation();
-        $this->gameModel        = new Game();
-        $this->tableModel       = new Table();
+        $this->sessionModel = new Session();
+        $this->gameModel    = new Game();
+        $this->tableModel   = new Table();
+        $this->userModel    = new User();
     }
 
     // ---- GET /admin/sessions/create ----
-    // Formulaire pour démarrer une session
     public function create(): void
     {
         $this->checkAdmin();
 
-        // Récupérer les données pour les selects
-        $reservations = $this->reservationModel->getConfirmed();
-        $games        = $this->gameModel->getAvailable();
-        $tables       = $this->tableModel->getFree();
+        $users  = $this->userModel->getAllUsers();
+        $games  = $this->gameModel->getAllGames();
+        $tables = $this->tableModel->getFreeTables();
 
         require_once __DIR__ . '/../Views/sessions/create.php';
     }
@@ -44,26 +43,26 @@ class SessionController
     {
         $this->checkAdmin();
 
-        $reservation_id = (int) ($_POST['reservation_id'] ?? 0);
-        $game_id        = (int) ($_POST['game_id']        ?? 0);
-        $table_id       = (int) ($_POST['table_id']       ?? 0);
-        $errors         = [];
+        $user_id  = (int) ($_POST['user_id']  ?? 0);
+        $game_id  = (int) ($_POST['game_id']  ?? 0);
+        $table_id = (int) ($_POST['table_id'] ?? 0);
+        $errors   = [];
 
         // ---- VALIDATIONS ----
-        if ($reservation_id === 0) $errors[] = "Réservation requise.";
-        if ($game_id === 0)        $errors[] = "Jeu requis.";
-        if ($table_id === 0)       $errors[] = "Table requise.";
+        if ($user_id === 0)  $errors[] = "Client requis.";
+        if ($game_id === 0)  $errors[] = "Jeu requis.";
+        if ($table_id === 0) $errors[] = "Table requise.";
 
         if (empty($errors)) {
-            $this->sessionModel->start($reservation_id, $game_id, $table_id);
+            $this->sessionModel->start($user_id, $game_id, $table_id);
             header('Location: /aji_nl3bo_managment/admin/sessions');
             exit;
         }
 
         // Erreurs → repasser les selects à la vue
-        $reservations = $this->reservationModel->getConfirmed();
-        $games        = $this->gameModel->getAvailable();
-        $tables       = $this->tableModel->getFree();
+        $users  = $this->userModel->getAllUsers();
+        $games  = $this->gameModel->getAllGames();
+        $tables = $this->tableModel->getFreeTables();
 
         require_once __DIR__ . '/../Views/sessions/create.php';
     }
