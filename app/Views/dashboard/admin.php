@@ -1,76 +1,194 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <title>Dashboard Admin</title>
-</head>
-<body>
-    <h1>Dashboard Admin - <?= htmlspecialchars($_SESSION['user_name']) ?></h1>
-    <a href="<?= BASE_URL ?>/logout">Déconnexion</a>
-    <span> | </span>
-    <a href="<?= BASE_URL ?>/games/create">➕ Ajouter un jeu</a>
-    <span> | </span>
-    <a href="<?= BASE_URL ?>/categories/create">➕ Ajouter une catégorie</a>
+<?php include __DIR__ . '/../includes/header.php'; ?>
 
-    <hr>
+<main>
+    <div class="dashboard-container">
 
-    <h2>Catégories</h2>
-    <table border="1" cellpadding="10">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($categories as $category): ?>
-                <tr>
-                    <td><?= $category['id'] ?></td>
-                    <td><?= htmlspecialchars($category['name']) ?></td>
-                    <td>
-                        <a href="<?= BASE_URL ?>/categories/edit/<?= $category['id'] ?>"><i class="fa-solid fa-pen"></i></a>
-                        <a href="<?= BASE_URL ?>/categories/destroy/<?= $category['id'] ?>"><i class="fa-solid fa-trash"></i></a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div>
+                <h1 class="dashboard-title">⚙️ Dashboard Admin</h1>
+                <p class="dashboard-subtitle">Bienvenue, <strong><?= htmlspecialchars($_SESSION['user_name']) ?></strong> 👋</p>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <a href="<?= BASE_URL ?>/games/create" class="btn btn-primary">
+                    <i class="fa-solid fa-gamepad"></i> Ajouter un jeu
+                </a>
+                <a href="<?= BASE_URL ?>/categories/create" class="btn btn-ghost">
+                    <i class="fa-solid fa-folder-plus"></i> Ajouter une catégorie
+                </a>
+                <a href="<?= BASE_URL ?>/logout" class="btn btn-danger">
+                    <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
+                </a>
+            </div>
+        </div>
 
-    <hr>
+        <!-- Stat Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-title">Total Jeux</div>
+                <div class="stat-value"><?= count($games) ?></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Catégories</div>
+                <div class="stat-value"><?= count($categories) ?></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Disponibles</div>
+                <div class="stat-value"><?= count(array_filter($games, fn($g) => ($g['status'] ?? '') === 'available')) ?></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-title">Indisponibles</div>
+                <div class="stat-value"><?= count(array_filter($games, fn($g) => ($g['status'] ?? '') !== 'available')) ?></div>
+            </div>
+        </div>
 
-    <h2>Jeux 🎮</h2>
-    <table border="1" cellpadding="10">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Catégorie</th>
-                <th>Durée</th>
-                <th>Difficulté</th>
-                <th>Statut</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($games as $game): ?>
-                <tr>
-                    <td><?= $game['id'] ?></td>
-                    <td><?= htmlspecialchars($game['name']) ?></td>
-                    <td><?= htmlspecialchars($game['category'] ?? 'Aucune') ?></td>
-                    <td><?= $game['duration'] ?> min</td>
-                    <td><?= htmlspecialchars($game['difficulty']) ?></td>
-                    <td><?= htmlspecialchars($game['status']) ?></td>
-                    <td>
-                        <a href="<?= BASE_URL ?>/games/show/<?= $game['id'] ?>"><i class="fa-solid fa-eye"></i></a>
-                        <a href="<?= BASE_URL ?>/games/edit/<?= $game['id'] ?>"><i class="fa-solid fa-pen"></i></a>
-                        <a href="<?= BASE_URL ?>/games/destroy/<?= $game['id'] ?>"><i class="fa-solid fa-trash"></i></a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</body>
-</html>
+        <!-- Catégories -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title"><i class="fa-solid fa-folder"></i> Catégories</span>
+                <a href="<?= BASE_URL ?>/categories/create" class="btn btn-ghost" style="padding:6px 14px;font-size:12px;">
+                    <i class="fa-solid fa-plus"></i> Nouvelle
+                </a>
+            </div>
+
+            <?php if (!empty($categories)): ?>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($categories as $category): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($category['id']) ?></td>
+                        <td>
+                            <span class="badge badge-purple">
+                                <i class="fa-solid fa-tag"></i>
+                                <?= htmlspecialchars($category['name']) ?>
+                            </span>
+                        </td>
+                        <td style="display:flex;gap:8px;">
+                            <a href="<?= BASE_URL ?>/categories/edit/<?= $category['id'] ?>"
+                               class="btn btn-ghost" style="padding:6px 12px;font-size:12px;">
+                                <i class="fa-solid fa-pen"></i> Modifier
+                            </a>
+                            <a href="<?= BASE_URL ?>/categories/destroy/<?= $category['id'] ?>"
+                               class="btn btn-danger" style="padding:6px 12px;font-size:12px;"
+                               onclick="return confirm('Supprimer cette catégorie ?')">
+                                <i class="fa-solid fa-trash"></i> Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php else: ?>
+            <div class="empty-state">
+                <div class="empty-icon">📂</div>
+                <div class="empty-title">Aucune catégorie</div>
+                <div class="empty-desc">Commencez par créer une catégorie.</div>
+                <a href="<?= BASE_URL ?>/categories/create" class="btn btn-primary" style="margin-top:16px;">
+                    <i class="fa-solid fa-plus"></i> Créer une catégorie
+                </a>
+            </div>
+            <?php endif; ?>
+        </div>
+
+        <!-- Jeux -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title"><i class="fa-solid fa-gamepad"></i> Jeux 🎮</span>
+                <a href="<?= BASE_URL ?>/games/create" class="btn btn-primary" style="padding:6px 14px;font-size:12px;">
+                    <i class="fa-solid fa-plus"></i> Nouveau jeu
+                </a>
+            </div>
+
+            <?php if (!empty($games)): ?>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Catégorie</th>
+                        <th>Durée</th>
+                        <th>Difficulté</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($games as $game): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($game['id']) ?></td>
+                        <td><strong><?= htmlspecialchars($game['name']) ?></strong></td>
+                        <td>
+                            <span class="badge badge-blue">
+                                <?= htmlspecialchars($game['category'] ?? 'Aucune') ?>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge badge-gray">
+                                <i class="fa-regular fa-clock"></i>
+                                <?= htmlspecialchars($game['duration']) ?> min
+                            </span>
+                        </td>
+                        <td>
+                            <?php
+                                $diff = strtolower($game['difficulty'] ?? '');
+                                $diffClass = match($diff) {
+                                    'facile'    => 'badge-green',
+                                    'moyen'     => 'badge-pending',
+                                    'difficile' => 'badge-blue',
+                                    default     => 'badge-gray',
+                                };
+                            ?>
+                            <span class="badge <?= $diffClass ?>">
+                                <?= htmlspecialchars($game['difficulty']) ?>
+                            </span>
+                        </td>
+                        <td>
+                            <?php
+                                $status = $game['status'] ?? '';
+                                $statusClass = $status === 'available' ? 'badge-green' : 'badge-gray';
+                                $statusLabel = $status === 'available' ? '✅ Disponible' : '❌ Indisponible';
+                            ?>
+                            <span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span>
+                        </td>
+                        <td style="display:flex;gap:8px;">
+                            <a href="<?= BASE_URL ?>/games/show/<?= $game['id'] ?>"
+                               class="btn btn-ghost" style="padding:6px 10px;font-size:12px;" title="Voir">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                            <a href="<?= BASE_URL ?>/games/edit/<?= $game['id'] ?>"
+                               class="btn btn-ghost" style="padding:6px 10px;font-size:12px;" title="Modifier">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            <a href="<?= BASE_URL ?>/games/destroy/<?= $game['id'] ?>"
+                               class="btn btn-danger" style="padding:6px 10px;font-size:12px;" title="Supprimer"
+                               onclick="return confirm('Supprimer ce jeu ?')">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php else: ?>
+            <div class="empty-state">
+                <div class="empty-icon">🎮</div>
+                <div class="empty-title">Aucun jeu trouvé</div>
+                <div class="empty-desc">Ajoutez votre premier jeu au catalogue.</div>
+                <a href="<?= BASE_URL ?>/games/create" class="btn btn-primary" style="margin-top:16px;">
+                    <i class="fa-solid fa-plus"></i> Ajouter un jeu
+                </a>
+            </div>
+            <?php endif; ?>
+        </div>
+
+    </div>
+</main>
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>
