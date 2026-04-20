@@ -1,35 +1,43 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <title>Catégories</title>
-</head>
-<body>
-    <h1>Liste des catégories</h1>
-    <a href="<?= BASE_URL ?>/categories/create">Ajouter une catégorie</a>
+<?php include __DIR__ . '/../includes/header.php'; ?>
 
-    <table border="1" cellpadding="10">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($categories as $category): ?>
+<div class="dashboard-container">
+
+    <div class="dashboard-header">
+        <div>
+            <h1 class="dashboard-title">🏷️ Catégories</h1>
+            <p class="dashboard-subtitle">Gérez les catégories de jeux</p>
+        </div>
+        <a href="<?= BASE_URL ?>/categories/create" class="btn btn-primary">+ Nouvelle catégorie</a>
+    </div>
+
+    <div class="card">
+        <div class="card-header"><span class="card-title">Liste des catégories</span></div>
+        <?php if (!empty($categories)): ?>
+        <table class="data-table">
+            <thead><tr><th>#</th><th>Nom</th><th>Actions</th></tr></thead>
+            <tbody>
+            <?php foreach ($categories as $cat): ?>
                 <tr>
-                    <td><?= $category['id'] ?></td>
-                    <td><?= $category['name'] ?></td>
-                    <td>
-                        <a href="<?= BASE_URL ?>/categories/edit/<?= $category['id'] ?>"><i class="fa-solid fa-pen"></i></a>
-                        <a href="<?= BASE_URL ?>/categories/destroy/<?= $category['id'] ?>"><i class="fa-solid fa-trash"></i></a>
+                    <td><?= $cat['id'] ?></td>
+                    <td><span class="badge badge-purple"><?= htmlspecialchars($cat['name']) ?></span></td>
+                    <td style="display:flex;gap:8px;">
+                        <a href="<?= BASE_URL ?>/categories/edit/<?= $cat['id'] ?>"    class="btn btn-ghost btn-sm">✏️ Modifier</a>
+                        <a href="<?= BASE_URL ?>/categories/destroy/<?= $cat['id'] ?>" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Supprimer ?')">🗑️ Supprimer</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
-        </tbody>
-    </table>
-</body>
-</html>
+            </tbody>
+        </table>
+        <?php else: ?>
+            <div class="empty-state">
+                <div class="empty-icon">📂</div>
+                <div class="empty-title">Aucune catégorie</div>
+                <a href="<?= BASE_URL ?>/categories/create" class="btn btn-primary" style="margin-top:16px;">Créer une catégorie</a>
+            </div>
+        <?php endif; ?>
+    </div>
+
+</div>
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>
