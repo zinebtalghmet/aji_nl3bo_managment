@@ -1,19 +1,21 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier la catégorie</title>
-</head>
-<body>
-    <h1>Modifier la catégorie</h1>
+<?php include __DIR__ . '/../includes/header.php'; ?>
+
+<div class="auth-wrapper">
+<div class="auth-container">
+
+    <h2>✏️ Modifier — <?= htmlspecialchars($category['name']) ?></h2>
 
     <form action="<?= BASE_URL ?>/categories/update/<?= $category['id'] ?>" method="POST">
-        <label>Nom:</label>
-        <input type="text" name="name" value="<?= $category['name'] ?>" required><br><br>
-
-        <button type="submit">Enregistrer</button>
-        <a href="<?= BASE_URL ?>/categories">Annuler</a>
+        <div class="form-group">
+            <label class="form-label">Nom de la catégorie</label>
+            <input type="text" name="name" class="form-input"
+                   value="<?= htmlspecialchars($category['name']) ?>" required>
+        </div>
+        <button type="submit" class="btn btn-warning btn-full">✏️ Enregistrer</button>
+        <p class="auth-link"><a href="<?= BASE_URL ?>/categories">Annuler</a></p>
     </form>
-</body>
-</html>
+
+</div>
+</div>
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>
